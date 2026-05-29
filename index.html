@@ -6,7 +6,7 @@
     <title>Hodnocení vína</title>
     <style>
         :root {
-            --primary-color: #722F37; /* Vinná červená */
+            --primary-color: #722F37;
             --bg-color: #f8f9fa;
             --card-bg: #ffffff;
             --text-color: #333333;
@@ -36,43 +36,57 @@
             color: var(--primary-color);
             text-align: center;
             margin-top: 0;
+            margin-bottom: 30px;
         }
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
 
-        label {
+        .group-label {
             display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            font-size: 0.9rem;
+            margin-bottom: 12px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #444;
         }
 
-        input[type="text"],
-        input[type="date"],
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1rem;
-            box-sizing: border-box;
+        .radio-group {
+            display: flex;
+            justify-content: space-between;
+            background: #f1f3f5;
+            padding: 12px 16px;
+            border-radius: var(--border-radius);
+        }
+
+        .radio-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .radio-item span {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .radio-item input[type="radio"] {
+            transform: scale(1.5); /* Zvětšení pro snazší dotyk na mobilu */
+            margin: 0;
+            cursor: pointer;
+            accent-color: var(--primary-color);
         }
 
         .category-title {
-            margin-top: 24px;
-            margin-bottom: 12px;
+            margin-top: 32px;
+            margin-bottom: 16px;
             padding-bottom: 4px;
             border-bottom: 2px solid var(--primary-color);
             color: var(--primary-color);
-            font-size: 1.2rem;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            font-size: 1.3rem;
         }
 
         button {
@@ -80,8 +94,8 @@
             background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 14px;
-            font-size: 1.1rem;
+            padding: 16px;
+            font-size: 1.2rem;
             font-weight: bold;
             border-radius: var(--border-radius);
             cursor: pointer;
@@ -99,11 +113,11 @@
             background-color: #f1f3f5;
             border-radius: var(--border-radius);
             text-align: center;
-            display: none; /* Skryto před výpočtem */
+            display: none;
         }
 
         .score-100 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: bold;
             color: var(--primary-color);
         }
@@ -118,171 +132,153 @@
 <body>
 
 <div class="container">
-    <h1>Hodnocení vína</h1>
+    <h1>Degustační lístek</h1>
     
     <form id="wineForm">
-        <div class="form-group">
-            <label for="wineName">Název vína / Vinařství</label>
-            <input type="text" id="wineName" placeholder="např. Ryzlink rýnský 2021" required>
-        </div>
-        <div class="form-group">
-            <label for="tastingDate">Datum degustace</label>
-            <input type="date" id="tastingDate" required>
-        </div>
-
         <h2 class="category-title">Vzhled</h2>
-        <div class="grid-2">
-            <div class="form-group">
-                <label for="vzhled_cirost">Čirost</label>
-                <select class="score-input" id="vzhled_cirost">
-                    <option value="5">5 - Vynikající</option>
-                    <option value="4">4 - Velmi dobré</option>
-                    <option value="3">3 - Dobré</option>
-                    <option value="2">2 - Uspokojivé</option>
-                    <option value="1">1 - Nedostatečné</option>
-                </select>
+        <div class="form-group">
+            <span class="group-label">Čirost</span>
+            <div class="radio-group">
+                <label class="radio-item"><span>5</span><input type="radio" name="vzhled_cirost" value="5"></label>
+                <label class="radio-item"><span>4</span><input type="radio" name="vzhled_cirost" value="4"></label>
+                <label class="radio-item"><span>3</span><input type="radio" name="vzhled_cirost" value="3"></label>
+                <label class="radio-item"><span>2</span><input type="radio" name="vzhled_cirost" value="2"></label>
+                <label class="radio-item"><span>1</span><input type="radio" name="vzhled_cirost" value="1"></label>
             </div>
-            <div class="form-group">
-                <label for="vzhled_barva">Barva</label>
-                <select class="score-input" id="vzhled_barva">
-                    <option value="10">10 - Vynikající</option>
-                    <option value="8">8 - Velmi dobré</option>
-                    <option value="6">6 - Dobré</option>
-                    <option value="4">4 - Uspokojivé</option>
-                    <option value="2">2 - Nedostatečné</option>
-                </select>
+        </div>
+        <div class="form-group">
+            <span class="group-label">Barva</span>
+            <div class="radio-group">
+                <label class="radio-item"><span>10</span><input type="radio" name="vzhled_barva" value="10"></label>
+                <label class="radio-item"><span>8</span><input type="radio" name="vzhled_barva" value="8"></label>
+                <label class="radio-item"><span>6</span><input type="radio" name="vzhled_barva" value="6"></label>
+                <label class="radio-item"><span>4</span><input type="radio" name="vzhled_barva" value="4"></label>
+                <label class="radio-item"><span>2</span><input type="radio" name="vzhled_barva" value="2"></label>
             </div>
         </div>
 
         <h2 class="category-title">Vůně</h2>
-        <div class="grid-2">
-            <div class="form-group">
-                <label for="vune_intenzita">Intenzita</label>
-                <select class="score-input" id="vune_intenzita">
-                    <option value="8">8 - Vynikající</option>
-                    <option value="7">7 - Velmi dobré</option>
-                    <option value="6">6 - Dobré</option>
-                    <option value="4">4 - Uspokojivé</option>
-                    <option value="2">2 - Nedostatečné</option>
-                </select>
+        <div class="form-group">
+            <span class="group-label">Intenzita</span>
+            <div class="radio-group">
+                <label class="radio-item"><span>8</span><input type="radio" name="vune_intenzita" value="8"></label>
+                <label class="radio-item"><span>7</span><input type="radio" name="vune_intenzita" value="7"></label>
+                <label class="radio-item"><span>6</span><input type="radio" name="vune_intenzita" value="6"></label>
+                <label class="radio-item"><span>4</span><input type="radio" name="vune_intenzita" value="4"></label>
+                <label class="radio-item"><span>2</span><input type="radio" name="vune_intenzita" value="2"></label>
             </div>
-            <div class="form-group">
-                <label for="vune_cistota">Čistota</label>
-                <select class="score-input" id="vune_cistota">
-                    <option value="6">6 - Vynikající</option>
-                    <option value="5">5 - Velmi dobré</option>
-                    <option value="4">4 - Dobré</option>
-                    <option value="3">3 - Uspokojivé</option>
-                    <option value="2">2 - Nedostatečné</option>
-                </select>
+        </div>
+        <div class="form-group">
+            <span class="group-label">Čistota</span>
+            <div class="radio-group">
+                <label class="radio-item"><span>6</span><input type="radio" name="vune_cistota" value="6"></label>
+                <label class="radio-item"><span>5</span><input type="radio" name="vune_cistota" value="5"></label>
+                <label class="radio-item"><span>4</span><input type="radio" name="vune_cistota" value="4"></label>
+                <label class="radio-item"><span>3</span><input type="radio" name="vune_cistota" value="3"></label>
+                <label class="radio-item"><span>2</span><input type="radio" name="vune_cistota" value="2"></label>
             </div>
-            <div class="form-group" style="grid-column: span 2;">
-                <label for="vune_harmonie">Harmonie</label>
-                <select class="score-input" id="vune_harmonie">
-                    <option value="16">16 - Vynikající</option>
-                    <option value="14">14 - Velmi dobré</option>
-                    <option value="12">12 - Dobré</option>
-                    <option value="10">10 - Uspokojivé</option>
-                    <option value="8">8 - Nedostatečné</option>
-                </select>
+        </div>
+        <div class="form-group">
+            <span class="group-label">Harmonie</span>
+            <div class="radio-group">
+                <label class="radio-item"><span>16</span><input type="radio" name="vune_harmonie" value="16"></label>
+                <label class="radio-item"><span>14</span><input type="radio" name="vune_harmonie" value="14"></label>
+                <label class="radio-item"><span>12</span><input type="radio" name="vune_harmonie" value="12"></label>
+                <label class="radio-item"><span>10</span><input type="radio" name="vune_harmonie" value="10"></label>
+                <label class="radio-item"><span>8</span><input type="radio" name="vune_harmonie" value="8"></label>
             </div>
         </div>
 
         <h2 class="category-title">Chuť</h2>
-        <div class="grid-2">
-            <div class="form-group">
-                <label for="chut_intenzita">Intenzita</label>
-                <select class="score-input" id="chut_intenzita">
-                    <option value="8">8 - Vynikající</option>
-                    <option value="7">7 - Velmi dobré</option>
-                    <option value="6">6 - Dobré</option>
-                    <option value="4">4 - Uspokojivé</option>
-                    <option value="2">2 - Nedostatečné</option>
-                </select>
+        <div class="form-group">
+            <span class="group-label">Intenzita</span>
+            <div class="radio-group">
+                <label class="radio-item"><span>8</span><input type="radio" name="chut_intenzita" value="8"></label>
+                <label class="radio-item"><span>7</span><input type="radio" name="chut_intenzita" value="7"></label>
+                <label class="radio-item"><span>6</span><input type="radio" name="chut_intenzita" value="6"></label>
+                <label class="radio-item"><span>4</span><input type="radio" name="chut_intenzita" value="4"></label>
+                <label class="radio-item"><span>2</span><input type="radio" name="chut_intenzita" value="2"></label>
             </div>
-            <div class="form-group">
-                <label for="chut_cistota">Čistota</label>
-                <select class="score-input" id="chut_cistota">
-                    <option value="6">6 - Vynikající</option>
-                    <option value="5">5 - Velmi dobré</option>
-                    <option value="4">4 - Dobré</option>
-                    <option value="3">3 - Uspokojivé</option>
-                    <option value="2">2 - Nedostatečné</option>
-                </select>
+        </div>
+        <div class="form-group">
+            <span class="group-label">Čistota</span>
+            <div class="radio-group">
+                <label class="radio-item"><span>6</span><input type="radio" name="chut_cistota" value="6"></label>
+                <label class="radio-item"><span>5</span><input type="radio" name="chut_cistota" value="5"></label>
+                <label class="radio-item"><span>4</span><input type="radio" name="chut_cistota" value="4"></label>
+                <label class="radio-item"><span>3</span><input type="radio" name="chut_cistota" value="3"></label>
+                <label class="radio-item"><span>2</span><input type="radio" name="chut_cistota" value="2"></label>
             </div>
-            <div class="form-group">
-                <label for="chut_harmonie">Harmonie</label>
-                <select class="score-input" id="chut_harmonie">
-                    <option value="22">22 - Vynikající</option>
-                    <option value="19">19 - Velmi dobré</option>
-                    <option value="16">16 - Dobré</option>
-                    <option value="13">13 - Uspokojivé</option>
-                    <option value="12">12 - Nedostatečné</option>
-                </select>
+        </div>
+        <div class="form-group">
+            <span class="group-label">Harmonie</span>
+            <div class="radio-group">
+                <label class="radio-item"><span>22</span><input type="radio" name="chut_harmonie" value="22"></label>
+                <label class="radio-item"><span>19</span><input type="radio" name="chut_harmonie" value="19"></label>
+                <label class="radio-item"><span>16</span><input type="radio" name="chut_harmonie" value="16"></label>
+                <label class="radio-item"><span>13</span><input type="radio" name="chut_harmonie" value="13"></label>
+                <label class="radio-item"><span>12</span><input type="radio" name="chut_harmonie" value="12"></label>
             </div>
-            <div class="form-group">
-                <label for="chut_perzistence">Perzistence</label>
-                <select class="score-input" id="chut_perzistence">
-                    <option value="8">8 - Vynikající</option>
-                    <option value="7">7 - Velmi dobré</option>
-                    <option value="6">6 - Dobré</option>
-                    <option value="5">5 - Uspokojivé</option>
-                    <option value="4">4 - Nedostatečné</option>
-                </select>
+        </div>
+        <div class="form-group">
+            <span class="group-label">Perzistence</span>
+            <div class="radio-group">
+                <label class="radio-item"><span>8</span><input type="radio" name="chut_perzistence" value="8"></label>
+                <label class="radio-item"><span>7</span><input type="radio" name="chut_perzistence" value="7"></label>
+                <label class="radio-item"><span>6</span><input type="radio" name="chut_perzistence" value="6"></label>
+                <label class="radio-item"><span>5</span><input type="radio" name="chut_perzistence" value="5"></label>
+                <label class="radio-item"><span>4</span><input type="radio" name="chut_perzistence" value="4"></label>
             </div>
         </div>
 
         <h2 class="category-title">Celkový dojem</h2>
         <div class="form-group">
-            <label for="celkovy_dojem">Celkový dojem z vína</label>
-            <select class="score-input" id="celkovy_dojem">
-                <option value="11">11 - Vynikající</option>
-                <option value="10">10 - Velmi dobré</option>
-                <option value="9">9 - Dobré</option>
-                <option value="8">8 - Uspokojivé</option>
-                <option value="7">7 - Nedostatečné</option>
-            </select>
+            <span class="group-label">Celkový dojem z vína</span>
+            <div class="radio-group">
+                <label class="radio-item"><span>11</span><input type="radio" name="celkovy_dojem" value="11"></label>
+                <label class="radio-item"><span>10</span><input type="radio" name="celkovy_dojem" value="10"></label>
+                <label class="radio-item"><span>9</span><input type="radio" name="celkovy_dojem" value="9"></label>
+                <label class="radio-item"><span>8</span><input type="radio" name="celkovy_dojem" value="8"></label>
+                <label class="radio-item"><span>7</span><input type="radio" name="celkovy_dojem" value="7"></label>
+            </div>
         </div>
 
         <button type="button" onclick="calculateScore()">Vyhodnotit víno</button>
     </form>
 
     <div class="results" id="resultsBlock">
-        <div style="font-size: 1.2rem; margin-bottom: 10px;" id="resultWineName"></div>
         <div class="score-100"><span id="score100">0</span> / 100</div>
         <div class="score-5">Pětibodová stupnice: <strong id="score5">0.0</strong> / 5.0</div>
     </div>
 </div>
 
 <script>
-    // Automatické nastavení dnešního data
-    document.getElementById('tastingDate').valueAsDate = new Date();
-
     function calculateScore() {
-        const wineName = document.getElementById('wineName').value;
-        if(!wineName) {
-            alert('Prosím, zadejte název vína.');
+        // Získání všech zaškrtnutých radio buttonů
+        const checkedRadios = document.querySelectorAll('input[type="radio"]:checked');
+        
+        // Kontrola, zda bylo ohodnoceno všech 10 parametrů
+        if (checkedRadios.length < 10) {
+            alert('Prosím, ohodnoťte všechny parametry (celkem jich je 10).');
             return;
         }
 
-        // Získání všech vybraných hodnot
-        const inputs = document.querySelectorAll('.score-input');
         let totalScore = 0;
         
-        inputs.forEach(input => {
-            totalScore += parseInt(input.value);
+        // Součet všech hodnot
+        checkedRadios.forEach(radio => {
+            totalScore += parseInt(radio.value);
         });
 
         // Převod na 5 bodovou stupnici (100 bodů = 5.0)
         const fivePointScore = (totalScore / 20).toFixed(1);
 
         // Zobrazení výsledků
-        document.getElementById('resultWineName').innerText = wineName;
         document.getElementById('score100').innerText = totalScore;
         document.getElementById('score5').innerText = fivePointScore;
         document.getElementById('resultsBlock').style.display = 'block';
 
-        // Rolování k výsledkům (pro mobily)
+        // Rolování k výsledkům
         document.getElementById('resultsBlock').scrollIntoView({ behavior: 'smooth' });
     }
 </script>
