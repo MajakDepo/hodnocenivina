@@ -50,15 +50,16 @@
 
         .header-item {
             position: relative;
-            height: 110px; /* Prostor pro otočený text */
+            height: 120px; /* Větší prostor pro otočený text */
         }
 
         .header-item span {
             position: absolute;
-            bottom: 5px;
+            bottom: 10px; /* Vzdálenost textu nad linkou */
             left: 50%;
-            transform-origin: bottom center;
-            transform: translateX(-50%) rotate(-45deg);
+            transform-origin: bottom left; /* Otáčí se za levý spodní roh = nepadá dolů */
+            transform: rotate(-45deg);
+            margin-left: -12px; /* Vycentrování vůči sloupci pod ním */
             white-space: nowrap;
             font-size: 0.85rem;
             font-weight: bold;
@@ -159,10 +160,11 @@
 
         @media (max-width: 400px) {
             .header-grid, .row-grid {
-                grid-template-columns: 75px repeat(5, 1fr); /* Úprava pro velmi malé displeje */
+                grid-template-columns: 75px repeat(5, 1fr);
             }
             .header-item span {
                 font-size: 0.75rem;
+                margin-left: -8px;
             }
             .row-label {
                 font-size: 0.85rem;
@@ -177,7 +179,8 @@
     
     <form id="wineForm">
         <div class="header-grid">
-            <div class="header-item"></div> <div class="header-item"><span>Vynikající</span></div>
+            <div class="header-item"></div>
+            <div class="header-item"><span>Vynikající</span></div>
             <div class="header-item"><span>Velmi dobré</span></div>
             <div class="header-item"><span>Dobré</span></div>
             <div class="header-item"><span>Uspokojivé</span></div>
