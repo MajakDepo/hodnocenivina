@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hodnocení vína</title>
+    <style>
+        :root {
+            --primary-color: #722F37; /* Vinná červená */
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            max-width: 500px;
+            width: 100%;
+            padding: 24px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .category-title {
+            margin-top: 24px;
+            margin-bottom: 12px;
+            padding-bottom: 4px;
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #5a252b;
+        }
+
+        .results {
+            margin-top: 24px;
+            padding: 20px;
+            background-color: #f1f3f5;
+            border-radius: var(--border-radius);
+            text-align: center;
+            display: none; /* Skryto před výpočtem */
+        }
+
+        .score-100 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .score-5 {
+            font-size: 1.5rem;
+            color: #555;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Hodnocení vína</h1>
+    
+    <form id="wineForm">
+        <div class="form-group">
+            <label for="wineName">Název vína / Vinařství</label>
+            <input type="text" id="wineName" placeholder="např. Ryzlink rýnský 2021" required>
+        </div>
+        <div class="form-group">
+            <label for="tastingDate">Datum degustace</label>
+            <input type="date" id="tastingDate" required>
+        </div>
+
+        <h2 class="category-title">Vzhled</h2>
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="vzhled_cirost">Čirost</label>
+                <select class="score-input" id="vzhled_cirost">
+                    <option value="5">5 - Vynikající</option>
+                    <option value="4">4 - Velmi dobré</option>
+                    <option value="3">3 - Dobré</option>
+                    <option value="2">2 - Uspokojivé</option>
+                    <option value="1">1 - Nedostatečné</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="vzhled_barva">Barva</label>
+                <select class="score-input" id="vzhled_barva">
+                    <option value="10">10 - Vynikající</option>
+                    <option value="8">8 - Velmi dobré</option>
+                    <option value="6">6 - Dobré</option>
+                    <option value="4">4 - Uspokojivé</option>
+                    <option value="2">2 - Nedostatečné</option>
+                </select>
+            </div>
+        </div>
+
+        <h2 class="category-title">Vůně</h2>
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="vune_intenzita">Intenzita</label>
+                <select class="score-input" id="vune_intenzita">
+                    <option value="8">8 - Vynikající</option>
+                    <option value="7">7 - Velmi dobré</option>
+                    <option value="6">6 - Dobré</option>
+                    <option value="4">4 - Uspokojivé</option>
+                    <option value="2">2 - Nedostatečné</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="vune_cistota">Čistota</label>
+                <select class="score-input" id="vune_cistota">
+                    <option value="6">6 - Vynikající</option>
+                    <option value="5">5 - Velmi dobré</option>
+                    <option value="4">4 - Dobré</option>
+                    <option value="3">3 - Uspokojivé</option>
+                    <option value="2">2 - Nedostatečné</option>
+                </select>
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+                <label for="vune_harmonie">Harmonie</label>
+                <select class="score-input" id="vune_harmonie">
+                    <option value="16">16 - Vynikající</option>
+                    <option value="14">14 - Velmi dobré</option>
+                    <option value="12">12 - Dobré</option>
+                    <option value="10">10 - Uspokojivé</option>
+                    <option value="8">8 - Nedostatečné</option>
+                </select>
+            </div>
+        </div>
+
+        <h2 class="category-title">Chuť</h2>
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="chut_intenzita">Intenzita</label>
+                <select class="score-input" id="chut_intenzita">
+                    <option value="8">8 - Vynikající</option>
+                    <option value="7">7 - Velmi dobré</option>
+                    <option value="6">6 - Dobré</option>
+                    <option value="4">4 - Uspokojivé</option>
+                    <option value="2">2 - Nedostatečné</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="chut_cistota">Čistota</label>
+                <select class="score-input" id="chut_cistota">
+                    <option value="6">6 - Vynikající</option>
+                    <option value="5">5 - Velmi dobré</option>
+                    <option value="4">4 - Dobré</option>
+                    <option value="3">3 - Uspokojivé</option>
+                    <option value="2">2 - Nedostatečné</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="chut_harmonie">Harmonie</label>
+                <select class="score-input" id="chut_harmonie">
+                    <option value="22">22 - Vynikající</option>
+                    <option value="19">19 - Velmi dobré</option>
+                    <option value="16">16 - Dobré</option>
+                    <option value="13">13 - Uspokojivé</option>
+                    <option value="12">12 - Nedostatečné</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="chut_perzistence">Perzistence</label>
+                <select class="score-input" id="chut_perzistence">
+                    <option value="8">8 - Vynikající</option>
+                    <option value="7">7 - Velmi dobré</option>
+                    <option value="6">6 - Dobré</option>
+                    <option value="5">5 - Uspokojivé</option>
+                    <option value="4">4 - Nedostatečné</option>
+                </select>
+            </div>
+        </div>
+
+        <h2 class="category-title">Celkový dojem</h2>
+        <div class="form-group">
+            <label for="celkovy_dojem">Celkový dojem z vína</label>
+            <select class="score-input" id="celkovy_dojem">
+                <option value="11">11 - Vynikající</option>
+                <option value="10">10 - Velmi dobré</option>
+                <option value="9">9 - Dobré</option>
+                <option value="8">8 - Uspokojivé</option>
+                <option value="7">7 - Nedostatečné</option>
+            </select>
+        </div>
+
+        <button type="button" onclick="calculateScore()">Vyhodnotit víno</button>
+    </form>
+
+    <div class="results" id="resultsBlock">
+        <div style="font-size: 1.2rem; margin-bottom: 10px;" id="resultWineName"></div>
+        <div class="score-100"><span id="score100">0</span> / 100</div>
+        <div class="score-5">Pětibodová stupnice: <strong id="score5">0.0</strong> / 5.0</div>
+    </div>
+</div>
+
+<script>
+    // Automatické nastavení dnešního data
+    document.getElementById('tastingDate').valueAsDate = new Date();
+
+    function calculateScore() {
+        const wineName = document.getElementById('wineName').value;
+        if(!wineName) {
+            alert('Prosím, zadejte název vína.');
+            return;
+        }
+
+        // Získání všech vybraných hodnot
+        const inputs = document.querySelectorAll('.score-input');
+        let totalScore = 0;
+        
+        inputs.forEach(input => {
+            totalScore += parseInt(input.value);
+        });
+
+        // Převod na 5 bodovou stupnici (100 bodů = 5.0)
+        const fivePointScore = (totalScore / 20).toFixed(1);
+
+        // Zobrazení výsledků
+        document.getElementById('resultWineName').innerText = wineName;
+        document.getElementById('score100').innerText = totalScore;
+        document.getElementById('score5').innerText = fivePointScore;
+        document.getElementById('resultsBlock').style.display = 'block';
+
+        // Rolování k výsledkům (pro mobily)
+        document.getElementById('resultsBlock').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
