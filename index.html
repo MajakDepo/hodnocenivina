@@ -25,7 +25,7 @@
 
         .container {
             background-color: var(--card-bg);
-            max-width: 550px;
+            max-width: 600px;
             width: 100%;
             padding: 20px;
             border-radius: var(--border-radius);
@@ -36,74 +36,86 @@
             color: var(--primary-color);
             text-align: center;
             margin-top: 0;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .group-label {
-            display: block;
-            margin-bottom: 12px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: #444;
-        }
-
-        .radio-group {
-            display: flex;
-            justify-content: space-between;
-            background: #f1f3f5;
-            padding: 12px 8px;
-            border-radius: var(--border-radius);
+        /* Hlavní hlavička s otočenými texty */
+        .header-grid {
+            display: grid;
+            grid-template-columns: 85px repeat(5, 1fr);
             gap: 4px;
+            margin-bottom: 8px;
+            border-bottom: 2px solid var(--primary-color);
         }
 
-        .radio-item {
+        .header-item {
+            position: relative;
+            height: 110px; /* Prostor pro otočený text */
+        }
+
+        .header-item span {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform-origin: bottom center;
+            transform: translateX(-50%) rotate(-45deg);
+            white-space: nowrap;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* Nadpis kategorie (Vzhled, Vůně...) */
+        .category-title {
+            margin-top: 24px;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 4px;
+        }
+
+        /* Řádek pro jednotlivé parametry */
+        .row-grid {
+            display: grid;
+            grid-template-columns: 85px repeat(5, 1fr);
+            gap: 4px;
+            align-items: center;
+            background: #f1f3f5;
+            padding: 12px 0;
+            margin-bottom: 8px;
+            border-radius: var(--border-radius);
+        }
+
+        .row-label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding-left: 8px;
+            word-break: break-word;
+            line-height: 1.2;
+        }
+
+        .radio-cell {
             display: flex;
             flex-direction: column;
             align-items: center;
             cursor: pointer;
-            flex: 1;
-            text-align: center;
         }
 
         .score-number {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             color: var(--primary-color);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
-        .score-label {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            color: #555;
-            margin-bottom: 10px;
-            min-height: 2.2rem; /* Zajišťuje, že inputy budou vždy v jedné rovině */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1.1;
-            hyphens: auto;
-            word-break: break-word;
-        }
-
-        .radio-item input[type="radio"] {
+        .radio-cell input[type="radio"] {
             transform: scale(1.4);
             margin: 0;
             cursor: pointer;
             accent-color: var(--primary-color);
-        }
-
-        .category-title {
-            margin-top: 32px;
-            margin-bottom: 16px;
-            padding-bottom: 4px;
-            border-bottom: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            font-size: 1.3rem;
         }
 
         button {
@@ -116,7 +128,7 @@
             font-weight: bold;
             border-radius: var(--border-radius);
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 24px;
             transition: background-color 0.2s;
         }
 
@@ -145,9 +157,15 @@
             margin-top: 8px;
         }
 
-        @media (min-width: 400px) {
-            .score-label {
+        @media (max-width: 400px) {
+            .header-grid, .row-grid {
+                grid-template-columns: 75px repeat(5, 1fr); /* Úprava pro velmi malé displeje */
+            }
+            .header-item span {
                 font-size: 0.75rem;
+            }
+            .row-label {
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -158,112 +176,100 @@
     <h1>Degustační lístek</h1>
     
     <form id="wineForm">
-        <h2 class="category-title">Vzhled</h2>
-        <div class="form-group">
-            <span class="group-label">Čirost</span>
-            <div class="radio-group">
-                <label class="radio-item"><span class="score-number">5</span><span class="score-label">Vynikající</span><input type="radio" name="vzhled_cirost" value="5"></label>
-                <label class="radio-item"><span class="score-number">4</span><span class="score-label">Velmi dobré</span><input type="radio" name="vzhled_cirost" value="4"></label>
-                <label class="radio-item"><span class="score-number">3</span><span class="score-label">Dobré</span><input type="radio" name="vzhled_cirost" value="3"></label>
-                <label class="radio-item"><span class="score-number">2</span><span class="score-label">Uspokojivé</span><input type="radio" name="vzhled_cirost" value="2"></label>
-                <label class="radio-item"><span class="score-number">1</span><span class="score-label">Nedostatečné</span><input type="radio" name="vzhled_cirost" value="1"></label>
-            </div>
-        </div>
-        <div class="form-group">
-            <span class="group-label">Barva</span>
-            <div class="radio-group">
-                <label class="radio-item"><span class="score-number">10</span><span class="score-label">Vynikající</span><input type="radio" name="vzhled_barva" value="10"></label>
-                <label class="radio-item"><span class="score-number">8</span><span class="score-label">Velmi dobré</span><input type="radio" name="vzhled_barva" value="8"></label>
-                <label class="radio-item"><span class="score-number">6</span><span class="score-label">Dobré</span><input type="radio" name="vzhled_barva" value="6"></label>
-                <label class="radio-item"><span class="score-number">4</span><span class="score-label">Uspokojivé</span><input type="radio" name="vzhled_barva" value="4"></label>
-                <label class="radio-item"><span class="score-number">2</span><span class="score-label">Nedostatečné</span><input type="radio" name="vzhled_barva" value="2"></label>
-            </div>
+        <div class="header-grid">
+            <div class="header-item"></div> <div class="header-item"><span>Vynikající</span></div>
+            <div class="header-item"><span>Velmi dobré</span></div>
+            <div class="header-item"><span>Dobré</span></div>
+            <div class="header-item"><span>Uspokojivé</span></div>
+            <div class="header-item"><span>Nedostatečné</span></div>
         </div>
 
-        <h2 class="category-title">Vůně</h2>
-        <div class="form-group">
-            <span class="group-label">Intenzita</span>
-            <div class="radio-group">
-                <label class="radio-item"><span class="score-number">8</span><span class="score-label">Vynikající</span><input type="radio" name="vune_intenzita" value="8"></label>
-                <label class="radio-item"><span class="score-number">7</span><span class="score-label">Velmi dobré</span><input type="radio" name="vune_intenzita" value="7"></label>
-                <label class="radio-item"><span class="score-number">6</span><span class="score-label">Dobré</span><input type="radio" name="vune_intenzita" value="6"></label>
-                <label class="radio-item"><span class="score-number">4</span><span class="score-label">Uspokojivé</span><input type="radio" name="vune_intenzita" value="4"></label>
-                <label class="radio-item"><span class="score-number">2</span><span class="score-label">Nedostatečné</span><input type="radio" name="vune_intenzita" value="2"></label>
-            </div>
+        <div class="category-title">Vzhled</div>
+        <div class="row-grid">
+            <div class="row-label">Čirost</div>
+            <label class="radio-cell"><span class="score-number">5</span><input type="radio" name="vzhled_cirost" value="5"></label>
+            <label class="radio-cell"><span class="score-number">4</span><input type="radio" name="vzhled_cirost" value="4"></label>
+            <label class="radio-cell"><span class="score-number">3</span><input type="radio" name="vzhled_cirost" value="3"></label>
+            <label class="radio-cell"><span class="score-number">2</span><input type="radio" name="vzhled_cirost" value="2"></label>
+            <label class="radio-cell"><span class="score-number">1</span><input type="radio" name="vzhled_cirost" value="1"></label>
         </div>
-        <div class="form-group">
-            <span class="group-label">Čistota</span>
-            <div class="radio-group">
-                <label class="radio-item"><span class="score-number">6</span><span class="score-label">Vynikající</span><input type="radio" name="vune_cistota" value="6"></label>
-                <label class="radio-item"><span class="score-number">5</span><span class="score-label">Velmi dobré</span><input type="radio" name="vune_cistota" value="5"></label>
-                <label class="radio-item"><span class="score-number">4</span><span class="score-label">Dobré</span><input type="radio" name="vune_cistota" value="4"></label>
-                <label class="radio-item"><span class="score-number">3</span><span class="score-label">Uspokojivé</span><input type="radio" name="vune_cistota" value="3"></label>
-                <label class="radio-item"><span class="score-number">2</span><span class="score-label">Nedostatečné</span><input type="radio" name="vune_cistota" value="2"></label>
-            </div>
-        </div>
-        <div class="form-group">
-            <span class="group-label">Harmonie</span>
-            <div class="radio-group">
-                <label class="radio-item"><span class="score-number">16</span><span class="score-label">Vynikající</span><input type="radio" name="vune_harmonie" value="16"></label>
-                <label class="radio-item"><span class="score-number">14</span><span class="score-label">Velmi dobré</span><input type="radio" name="vune_harmonie" value="14"></label>
-                <label class="radio-item"><span class="score-number">12</span><span class="score-label">Dobré</span><input type="radio" name="vune_harmonie" value="12"></label>
-                <label class="radio-item"><span class="score-number">10</span><span class="score-label">Uspokojivé</span><input type="radio" name="vune_harmonie" value="10"></label>
-                <label class="radio-item"><span class="score-number">8</span><span class="score-label">Nedostatečné</span><input type="radio" name="vune_harmonie" value="8"></label>
-            </div>
+        <div class="row-grid">
+            <div class="row-label">Barva</div>
+            <label class="radio-cell"><span class="score-number">10</span><input type="radio" name="vzhled_barva" value="10"></label>
+            <label class="radio-cell"><span class="score-number">8</span><input type="radio" name="vzhled_barva" value="8"></label>
+            <label class="radio-cell"><span class="score-number">6</span><input type="radio" name="vzhled_barva" value="6"></label>
+            <label class="radio-cell"><span class="score-number">4</span><input type="radio" name="vzhled_barva" value="4"></label>
+            <label class="radio-cell"><span class="score-number">2</span><input type="radio" name="vzhled_barva" value="2"></label>
         </div>
 
-        <h2 class="category-title">Chuť</h2>
-        <div class="form-group">
-            <span class="group-label">Intenzita</span>
-            <div class="radio-group">
-                <label class="radio-item"><span class="score-number">8</span><span class="score-label">Vynikající</span><input type="radio" name="chut_intenzita" value="8"></label>
-                <label class="radio-item"><span class="score-number">7</span><span class="score-label">Velmi dobré</span><input type="radio" name="chut_intenzita" value="7"></label>
-                <label class="radio-item"><span class="score-number">6</span><span class="score-label">Dobré</span><input type="radio" name="chut_intenzita" value="6"></label>
-                <label class="radio-item"><span class="score-number">4</span><span class="score-label">Uspokojivé</span><input type="radio" name="chut_intenzita" value="4"></label>
-                <label class="radio-item"><span class="score-number">2</span><span class="score-label">Nedostatečné</span><input type="radio" name="chut_intenzita" value="2"></label>
-            </div>
+        <div class="category-title">Vůně</div>
+        <div class="row-grid">
+            <div class="row-label">Intenzita</div>
+            <label class="radio-cell"><span class="score-number">8</span><input type="radio" name="vune_intenzita" value="8"></label>
+            <label class="radio-cell"><span class="score-number">7</span><input type="radio" name="vune_intenzita" value="7"></label>
+            <label class="radio-cell"><span class="score-number">6</span><input type="radio" name="vune_intenzita" value="6"></label>
+            <label class="radio-cell"><span class="score-number">4</span><input type="radio" name="vune_intenzita" value="4"></label>
+            <label class="radio-cell"><span class="score-number">2</span><input type="radio" name="vune_intenzita" value="2"></label>
         </div>
-        <div class="form-group">
-            <span class="group-label">Čistota</span>
-            <div class="radio-group">
-                <label class="radio-item"><span class="score-number">6</span><span class="score-label">Vynikající</span><input type="radio" name="chut_cistota" value="6"></label>
-                <label class="radio-item"><span class="score-number">5</span><span class="score-label">Velmi dobré</span><input type="radio" name="chut_cistota" value="5"></label>
-                <label class="radio-item"><span class="score-number">4</span><span class="score-label">Dobré</span><input type="radio" name="chut_cistota" value="4"></label>
-                <label class="radio-item"><span class="score-number">3</span><span class="score-label">Uspokojivé</span><input type="radio" name="chut_cistota" value="3"></label>
-                <label class="radio-item"><span class="score-number">2</span><span class="score-label">Nedostatečné</span><input type="radio" name="chut_cistota" value="2"></label>
-            </div>
+        <div class="row-grid">
+            <div class="row-label">Čistota</div>
+            <label class="radio-cell"><span class="score-number">6</span><input type="radio" name="vune_cistota" value="6"></label>
+            <label class="radio-cell"><span class="score-number">5</span><input type="radio" name="vune_cistota" value="5"></label>
+            <label class="radio-cell"><span class="score-number">4</span><input type="radio" name="vune_cistota" value="4"></label>
+            <label class="radio-cell"><span class="score-number">3</span><input type="radio" name="vune_cistota" value="3"></label>
+            <label class="radio-cell"><span class="score-number">2</span><input type="radio" name="vune_cistota" value="2"></label>
         </div>
-        <div class="form-group">
-            <span class="group-label">Harmonie</span>
-            <div class="radio-group">
-                <label class="radio-item"><span class="score-number">22</span><span class="score-label">Vynikající</span><input type="radio" name="chut_harmonie" value="22"></label>
-                <label class="radio-item"><span class="score-number">19</span><span class="score-label">Velmi dobré</span><input type="radio" name="chut_harmonie" value="19"></label>
-                <label class="radio-item"><span class="score-number">16</span><span class="score-label">Dobré</span><input type="radio" name="chut_harmonie" value="16"></label>
-                <label class="radio-item"><span class="score-number">13</span><span class="score-label">Uspokojivé</span><input type="radio" name="chut_harmonie" value="13"></label>
-                <label class="radio-item"><span class="score-number">12</span><span class="score-label">Nedostatečné</span><input type="radio" name="chut_harmonie" value="12"></label>
-            </div>
-        </div>
-        <div class="form-group">
-            <span class="group-label">Perzistence</span>
-            <div class="radio-group">
-                <label class="radio-item"><span class="score-number">8</span><span class="score-label">Vynikající</span><input type="radio" name="chut_perzistence" value="8"></label>
-                <label class="radio-item"><span class="score-number">7</span><span class="score-label">Velmi dobré</span><input type="radio" name="chut_perzistence" value="7"></label>
-                <label class="radio-item"><span class="score-number">6</span><span class="score-label">Dobré</span><input type="radio" name="chut_perzistence" value="6"></label>
-                <label class="radio-item"><span class="score-number">5</span><span class="score-label">Uspokojivé</span><input type="radio" name="chut_perzistence" value="5"></label>
-                <label class="radio-item"><span class="score-number">4</span><span class="score-label">Nedostatečné</span><input type="radio" name="chut_perzistence" value="4"></label>
-            </div>
+        <div class="row-grid">
+            <div class="row-label">Harmonie</div>
+            <label class="radio-cell"><span class="score-number">16</span><input type="radio" name="vune_harmonie" value="16"></label>
+            <label class="radio-cell"><span class="score-number">14</span><input type="radio" name="vune_harmonie" value="14"></label>
+            <label class="radio-cell"><span class="score-number">12</span><input type="radio" name="vune_harmonie" value="12"></label>
+            <label class="radio-cell"><span class="score-number">10</span><input type="radio" name="vune_harmonie" value="10"></label>
+            <label class="radio-cell"><span class="score-number">8</span><input type="radio" name="vune_harmonie" value="8"></label>
         </div>
 
-        <h2 class="category-title">Celkový dojem</h2>
-        <div class="form-group">
-            <span class="group-label">Celkový dojem z vína</span>
-            <div class="radio-group">
-                <label class="radio-item"><span class="score-number">11</span><span class="score-label">Vynikající</span><input type="radio" name="celkovy_dojem" value="11"></label>
-                <label class="radio-item"><span class="score-number">10</span><span class="score-label">Velmi dobré</span><input type="radio" name="celkovy_dojem" value="10"></label>
-                <label class="radio-item"><span class="score-number">9</span><span class="score-label">Dobré</span><input type="radio" name="celkovy_dojem" value="9"></label>
-                <label class="radio-item"><span class="score-number">8</span><span class="score-label">Uspokojivé</span><input type="radio" name="celkovy_dojem" value="8"></label>
-                <label class="radio-item"><span class="score-number">7</span><span class="score-label">Nedostatečné</span><input type="radio" name="celkovy_dojem" value="7"></label>
-            </div>
+        <div class="category-title">Chuť</div>
+        <div class="row-grid">
+            <div class="row-label">Intenzita</div>
+            <label class="radio-cell"><span class="score-number">8</span><input type="radio" name="chut_intenzita" value="8"></label>
+            <label class="radio-cell"><span class="score-number">7</span><input type="radio" name="chut_intenzita" value="7"></label>
+            <label class="radio-cell"><span class="score-number">6</span><input type="radio" name="chut_intenzita" value="6"></label>
+            <label class="radio-cell"><span class="score-number">4</span><input type="radio" name="chut_intenzita" value="4"></label>
+            <label class="radio-cell"><span class="score-number">2</span><input type="radio" name="chut_intenzita" value="2"></label>
+        </div>
+        <div class="row-grid">
+            <div class="row-label">Čistota</div>
+            <label class="radio-cell"><span class="score-number">6</span><input type="radio" name="chut_cistota" value="6"></label>
+            <label class="radio-cell"><span class="score-number">5</span><input type="radio" name="chut_cistota" value="5"></label>
+            <label class="radio-cell"><span class="score-number">4</span><input type="radio" name="chut_cistota" value="4"></label>
+            <label class="radio-cell"><span class="score-number">3</span><input type="radio" name="chut_cistota" value="3"></label>
+            <label class="radio-cell"><span class="score-number">2</span><input type="radio" name="chut_cistota" value="2"></label>
+        </div>
+        <div class="row-grid">
+            <div class="row-label">Harmonie</div>
+            <label class="radio-cell"><span class="score-number">22</span><input type="radio" name="chut_harmonie" value="22"></label>
+            <label class="radio-cell"><span class="score-number">19</span><input type="radio" name="chut_harmonie" value="19"></label>
+            <label class="radio-cell"><span class="score-number">16</span><input type="radio" name="chut_harmonie" value="16"></label>
+            <label class="radio-cell"><span class="score-number">13</span><input type="radio" name="chut_harmonie" value="13"></label>
+            <label class="radio-cell"><span class="score-number">12</span><input type="radio" name="chut_harmonie" value="12"></label>
+        </div>
+        <div class="row-grid">
+            <div class="row-label">Perzistence</div>
+            <label class="radio-cell"><span class="score-number">8</span><input type="radio" name="chut_perzistence" value="8"></label>
+            <label class="radio-cell"><span class="score-number">7</span><input type="radio" name="chut_perzistence" value="7"></label>
+            <label class="radio-cell"><span class="score-number">6</span><input type="radio" name="chut_perzistence" value="6"></label>
+            <label class="radio-cell"><span class="score-number">5</span><input type="radio" name="chut_perzistence" value="5"></label>
+            <label class="radio-cell"><span class="score-number">4</span><input type="radio" name="chut_perzistence" value="4"></label>
+        </div>
+
+        <div class="category-title">Celkový dojem</div>
+        <div class="row-grid">
+            <div class="row-label">Dojem z vína</div>
+            <label class="radio-cell"><span class="score-number">11</span><input type="radio" name="celkovy_dojem" value="11"></label>
+            <label class="radio-cell"><span class="score-number">10</span><input type="radio" name="celkovy_dojem" value="10"></label>
+            <label class="radio-cell"><span class="score-number">9</span><input type="radio" name="celkovy_dojem" value="9"></label>
+            <label class="radio-cell"><span class="score-number">8</span><input type="radio" name="celkovy_dojem" value="8"></label>
+            <label class="radio-cell"><span class="score-number">7</span><input type="radio" name="celkovy_dojem" value="7"></label>
         </div>
 
         <button type="button" onclick="calculateScore()">Vyhodnotit víno</button>
